@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - AI Team Orchestrator</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <div class="nav-brand">🤖 AI Team Orchestrator</div>
+    <div class="nav-links">
+      <a href="/">Dashboard</a>
+      <a href="/settings" class="active">⚙️ Settings</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="settings-page">
+      <h2>Connect Your AI Accounts</h2>
+      <p class="subtitle">Enter your API keys below. These are FREE from your existing accounts — no extra purchases needed.</p>
+
+      <% if (message) { %>
+        <div class="alert alert-success"><%= message %></div>
+      <% } %>
+
+      <form method="POST" action="/settings" autocomplete="off">
+        <!-- Claude -->
+        <div class="key-card">
+          <div class="key-header">
+            <span class="key-icon">🧠</span>
+            <div>
+              <h3>Claude (Team Lead)</h3>
+              <p>Analyzes ideas, creates prompts, builds final plan</p>
+            </div>
+            <span class="key-status <%= status.claude ? 'connected' : '' %>">
+              <%= status.claude ? '✅ Connected' : '❌ Not connected' %>
+            </span>
+          </div>
+          <div class="key-input-row">
+            <input type="password" name="claude" placeholder="sk-ant-..." value="<%= keys.claude || '' %>" />
+            <a href="https://console.anthropic.com/settings/keys" target="_blank" class="get-key-btn">Get Free Key →</a>
+          </div>
+        </div>
+
+        <!-- Gemini -->
+        <div class="key-card">
+          <div class="key-header">
+            <span class="key-icon">🔬</span>
+            <div>
+              <h3>Gemini (Deep Researcher)</h3>
+              <p>Market analysis, competitor research, feasibility studies</p>
+            </div>
+            <span class="key-status <%= status.gemini ? 'connected' : '' %>">
+              <%= status.gemini ? '✅ Connected' : '❌ Not connected' %>
+            </span>
+          </div>
+          <div class="key-input-row">
+            <input type="password" name="gemini" placeholder="AIza..." value="<%= keys.gemini || '' %>" />
+            <a href="https://aistudio.google.com/apikey" target="_blank" class="get-key-btn">Get Free Key →</a>
+          </div>
+        </div>
+
+        <!-- ChatGPT -->
+        <div class="key-card">
+          <div class="key-header">
+            <span class="key-icon">🏗️</span>
+            <div>
+              <h3>ChatGPT (Architect)</h3>
+              <p>Technical architecture, system design, logic</p>
+            </div>
+            <span class="key-status <%= status.chatgpt ? 'connected' : '' %>">
+              <%= status.chatgpt ? '✅ Connected' : '❌ Not connected' %>
+            </span>
+          </div>
+          <div class="key-input-row">
+            <input type="password" name="openai" placeholder="sk-..." value="<%= keys.openai || '' %>" />
+            <a href="https://platform.openai.com/api-keys" target="_blank" class="get-key-btn">Get Free Key →</a>
+          </div>
+        </div>
+
+        <!-- Perplexity -->
+        <div class="key-card">
+          <div class="key-header">
+            <span class="key-icon">🔍</span>
+            <div>
+              <h3>Perplexity (Data Finder)</h3>
+              <p>Real-time data, statistics, facts, citations</p>
+            </div>
+            <span class="key-status <%= status.perplexity ? 'connected' : '' %>">
+              <%= status.perplexity ? '✅ Connected' : '❌ Not connected' %>
+            </span>
+          </div>
+          <div class="key-input-row">
+            <input type="password" name="perplexity" placeholder="pplx-..." value="<%= keys.perplexity || '' %>" />
+            <a href="https://www.perplexity.ai/settings/api" target="_blank" class="get-key-btn">Get Free Key →</a>
+          </div>
+        </div>
+
+        <button type="submit" class="save-btn">💾 Save & Connect</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

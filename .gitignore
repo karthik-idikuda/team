@@ -1,0 +1,14 @@
+node_modules/
+.env
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+venv/
+venv2/
+dist/
+build/
+target/
+.next/
+.gradle/
+.env.local

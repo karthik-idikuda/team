@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Team Orchestrator</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <div class="nav-brand">🤖 AI Team Orchestrator</div>
+    <div class="nav-links">
+      <a href="/" class="active">Dashboard</a>
+      <a href="/settings">⚙️ Settings</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <h3>Team Status</h3>
+      <div class="agents">
+        <div class="agent-badge <%= status.claude ? 'online' : 'offline' %>">
+          <span class="dot"></span> Claude (Team Lead)
+        </div>
+        <div class="agent-badge <%= status.gemini ? 'online' : 'offline' %>">
+          <span class="dot"></span> Gemini (Researcher)
+        </div>
+        <div class="agent-badge <%= status.chatgpt ? 'online' : 'offline' %>">
+          <span class="dot"></span> ChatGPT (Architect)
+        </div>
+        <div class="agent-badge <%= status.perplexity ? 'online' : 'offline' %>">
+          <span class="dot"></span> Perplexity (Data)
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Section -->
+    <div class="input-section">
+      <h2>What's your project idea?</h2>
+      <p class="subtitle">Type your idea below. Claude will analyze it, create prompts for each AI, and the team will deliver a complete project plan.</p>
+      <form id="ideaForm">
+        <textarea id="ideaInput" placeholder="Example: I want to build a mobile app that connects local farmers directly with restaurants, cutting out middlemen. It should have real-time inventory, pricing, and delivery tracking..." rows="5"></textarea>
+        <button type="submit" id="submitBtn">
+          <span class="btn-text">🚀 Launch AI Team</span>
+          <span class="btn-loading" style="display:none;">⏳ Team is working...</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Progress Section -->
+    <div id="progressSection" class="progress-section" style="display:none;">
+      <h3>Team Progress</h3>
+      <div class="progress-grid">
+        <div class="progress-card" id="prog-claude">
+          <div class="prog-header">
+            <span class="prog-icon">🧠</span>
+            <span class="prog-name">Claude</span>
+            <span class="prog-status" id="status-claude">Waiting...</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="fill-claude"></div></div>
+        </div>
+        <div class="progress-card" id="prog-gemini">
+          <div class="prog-header">
+            <span class="prog-icon">🔬</span>
+            <span class="prog-name">Gemini</span>
+            <span class="prog-status" id="status-gemini">Waiting...</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="fill-gemini"></div></div>
+        </div>
+        <div class="progress-card" id="prog-chatgpt">
+          <div class="prog-header">
+            <span class="prog-icon">🏗️</span>
+            <span class="prog-name">ChatGPT</span>
+            <span class="prog-status" id="status-chatgpt">Waiting...</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="fill-chatgpt"></div></div>
+        </div>
+        <div class="progress-card" id="prog-perplexity">
+          <div class="prog-header">
+            <span class="prog-icon">🔍</span>
+            <span class="prog-name">Perplexity</span>
+            <span class="prog-status" id="status-perplexity">Waiting...</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="fill-perplexity"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="resultsSection" class="results-section" style="display:none;">
+      <!-- Final Plan -->
+      <div class="result-card final-plan" id="result-final">
+        <h2>📋 Final Project Plan</h2>
+        <div class="result-content" id="content-final"></div>
+      </div>
+
+      <!-- Individual Results Toggle -->
+      <details class="individual-results">
+        <summary><h3>📂 View Individual AI Responses</h3></summary>
+        
+        <div class="result-card" id="result-coordinator">
+          <h3>🧠 Claude - Idea Analysis & Prompts</h3>
+          <div class="result-content" id="content-coordinator"></div>
+        </div>
+
+        <div class="result-card" id="result-gemini">
+          <h3>🔬 Gemini - Deep Research</h3>
+          <div class="result-content" id="content-gemini"></div>
+        </div>
+
+        <div class="result-card" id="result-perplexity">
+          <h3>🔍 Perplexity - Data & Facts</h3>
+          <div class="result-content" id="content-perplexity"></div>
+        </div>
+
+        <div class="result-card" id="result-chatgpt">
+          <h3>🏗️ ChatGPT - Architecture & Logic</h3>
+          <div class="result-content" id="content-chatgpt"></div>
+        </div>
+      </details>
+    </div>
+  </main>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
