@@ -1,144 +1,143 @@
-# TEAM
+# AI Team Orchestrator
 
-## Abstract
-This repository serves as the core codebase for the **team** system. It encompasses the source code, architectural configurations, and structural assets required for deployment, execution, and continued development.
+A multi-AI collaboration platform where multiple AI models (OpenAI GPT, Google Gemini, Anthropic Claude) work together on projects through an orchestrated workflow. The system provides a web-based interface for delegating tasks across AI providers, with session management and real-time markdown rendering of responses.
 
-## System Architecture
+---
 
-### Project Specifications
-- **Technology Stack:** Node.js Platform / Web Technologies
-- **Primary Language:** JavaScript/TypeScript
-- **Execution Entrypoint:** Package module initialization
+## Table of Contents
 
-### Architectural Paradigm
-The system is designed utilizing a modular architectural approach, effectively isolating application logic, integration interfaces, and support configurations. Transient build directories, dependency caches, and virtual environments are explicitly excluded from source control to maintain structural integrity and reproducibility.
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [License](#license)
 
-- **Application Layer:** Contains the core executables, command handlers, and user interface endpoints.
-- **Domain Layer:** Encapsulates the business logic, specialized feature modules, and data processing routines.
-- **Integration Layer:** Manages internal and external communications, including database persistent layers, API bindings, and file system operations.
-- **Support Infrastructure:** Houses configuration matrices, deployment scripts, technical documentation, and testing frameworks.
+---
 
-## Data and Execution Flow
-1. **Initialization:** The platform bootstraps via the designated subsystem entrypoint.
-2. **Subsystem Routing:** Incoming requests, system commands, or execution triggers are directed to the designated feature modules within the domain layer.
-3. **Information Processing:** Domain logic is applied, interfacing closely with the integration layer for data persistence or external data retrieval as necessitated by the operation.
-4. **Resolution:** Computed artifacts and operational outputs are returned to the invoking interface, successfully terminating the transaction lifecycle.
+## Overview
 
-## Repository Component Map
-The following outlines the primary structural components and module layout of the project architecture:
+AI Team Orchestrator provides:
 
-```text
-.DS_Store
-.env
-.git
-.gitignore
-README.md
-node_modules
-package-lock.json
-package.json
-public
-public/.DS_Store
-public/css
-public/js
-src
-src/.DS_Store
-src/ai
-src/routes
-src/server.js
-src/utils
-views
-views/index.ejs
-views/settings.ejs
+- **Multi-provider AI integration** -- OpenAI, Google Gemini, and Anthropic Claude working in concert
+- **Task delegation engine** -- Routes tasks to the most appropriate AI model
+- **Session management** -- Persistent conversation context via express-session
+- **Real-time markdown rendering** -- AI responses rendered as formatted markdown
+- **Web dashboard** -- EJS-templated interface for team management and task assignment
+- **Extensible architecture** -- Add new AI providers through modular SDK integration
+
+---
+
+## Architecture
+
+```
++---------------------------------------+
+|         Express.js Web Server         |
+|  EJS Templates | Session Middleware   |
++---------------------------------------+
+              |
+              v
++---------------------------------------+
+|       Task Orchestration Engine       |
+|  Route tasks to AI providers          |
+|  Aggregate and format responses       |
++---------------------------------------+
+    |              |              |
+    v              v              v
++----------+ +----------+ +----------+
+| OpenAI   | | Google   | | Anthropic|
+| GPT SDK  | | Gemini   | | Claude   |
+| v4.52    | | v0.21    | | v0.30    |
++----------+ +----------+ +----------+
+              |
+              v
++---------------------------------------+
+|         Response Renderer             |
+|  marked (Markdown to HTML)            |
++---------------------------------------+
 ```
 
-## Administrative Information
-- **Maintainer:** karthik-idikuda
-- **Documentation Build Date:** 2026-03-22
-- **Visibility:** Public Repository
+---
 
-## Architecture Overview
+## Technology Stack
 
-### Project Type
-- **Primary stack:** Node.js application
-- **Primary language:** JavaScript/TypeScript
-- **Primary entrypoint/build root:** package.json scripts
+| Component        | Technology                          |
+|------------------|-------------------------------------|
+| Runtime          | Node.js                             |
+| Framework        | Express.js 4.18                     |
+| Templating       | EJS 3.1                             |
+| AI Providers     | OpenAI SDK 4.52, Google Generative AI 0.21, Anthropic SDK 0.30 |
+| Markdown         | marked 12.0                         |
+| Sessions         | express-session 1.18                |
+| Environment      | dotenv 16.4                         |
+| Dev Server       | nodemon 3.1                         |
 
-### High-Level Architecture
-- This repository is organized in modular directories grouped by concern (application code, configuration, scripts, documentation, and assets).
-- Runtime/build artifacts such as virtual environments, node modules, and compiled outputs are intentionally excluded from architecture mapping.
-- The project follows a layered flow: entry point -> domain/application modules -> integrations/data/config.
+---
 
-### Component Breakdown
-- **Application layer:** Core executables, services, UI, or command handlers.
-- **Domain/business layer:** Feature logic and processing modules.
-- **Integration layer:** External APIs, databases, files, or platform-specific connectors.
-- **Support layer:** Config, scripts, docs, tests, and static assets.
+## Project Structure
 
-### Data/Execution Flow
-1. Start from the configured entrypoint or package scripts.
-2. Route execution into feature-specific modules.
-3. Process domain logic and interact with integrations/storage.
-4. Return results to UI/API/CLI outputs.
-
-### Directory Map (Top-Level + Key Subfolders)
 ```
-.DS_Store
-node_modules
-README.md
-public
-public/.DS_Store
-public/css
-public/js
-.gitignore
-package-lock.json
-package.json
-.env
-.git
-views
-views/index.ejs
-views/settings.ejs
-src
-src/.DS_Store
-src/server.js
-src/utils
-src/ai
-src/routes
+team/
+|
+|-- package.json                  # Dependencies and scripts
+|-- .env                          # API keys (OpenAI, Gemini, Claude)
+|
+|-- src/
+|   +-- server.js                 # Express server entry point
+|
+|-- public/                       # Static assets (CSS, JS, images)
++-- views/                        # EJS templates
 ```
 
-### Notes
-- Architecture section auto-generated on 2026-03-22 and can be refined further with exact runtime/deployment details.
+---
 
-## Technical Stack
-
-- Core language: JavaScript/TypeScript
-- Primary stack: Node.js application
-
-## Setup
-
-Typical local setup for Node.js applications:
-
-1. Ensure Node.js and npm are installed.
-2. Install dependencies from package.json.
+## Installation
 
 ```bash
+git clone https://github.com/karthik-idikuda/AI-Team-Orchestrator.git
+cd AI-Team-Orchestrator
+
 npm install
 ```
 
-## Running Locally
+### Configure API Keys
 
-Use the npm scripts defined in package.json. For example:
+Create `.env` file:
+
+```env
+OPENAI_API_KEY=your_key
+GOOGLE_AI_KEY=your_key
+ANTHROPIC_API_KEY=your_key
+```
+
+---
+
+## Usage
 
 ```bash
+# Production
+npm start
+
+# Development (with auto-reload)
 npm run dev
-
 ```
 
-## Testing
+The server starts at `http://localhost:3000`.
 
-If test scripts are defined in package.json, run them via npm. For example:
+---
 
-```bash
-npm test
+## Configuration
 
-```
+| Variable            | Description                 |
+|---------------------|-----------------------------|
+| OPENAI_API_KEY      | OpenAI GPT API key          |
+| GOOGLE_AI_KEY       | Google Gemini API key       |
+| ANTHROPIC_API_KEY   | Anthropic Claude API key    |
 
+---
+
+## License
+
+This project is released for educational and research purposes.
